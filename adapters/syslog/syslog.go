@@ -147,7 +147,7 @@ func (a *SyslogAdapter) retryTemporary(buf []byte) error {
 	}, retryCount)
 
 	if err != nil {
-		log.Println("syslog: retry failed")
+		log.Println("syslog: retry failed, exiting")
 		os.Exit(3)
 	}
 
