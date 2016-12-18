@@ -135,7 +135,9 @@ func (a *SyslogAdapter) retry(buf []byte, err error) error {
 }
 
 func (a *SyslogAdapter) retryTemporary(buf []byte) error {
-	log.Printf("syslog: retrying tcp up to %v times\n", retryCount)
+	log.Printf("syslog: Connection failed, sleeping for 1s and exiting", retryCount)
+	time.Sleep(1000 * time.Millisecond)
+	os.Exit(3)
 	err := retryExp(func() error {
 		_, err := a.conn.Write(buf)
 		if err == nil {
