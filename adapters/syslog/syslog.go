@@ -157,7 +157,9 @@ func (a *SyslogAdapter) retryTemporary(buf []byte) error {
 }
 
 func (a *SyslogAdapter) reconnect() error {
-	log.Printf("syslog: reconnecting up to %v times\n", retryCount)
+	log.Printf("syslog: Connection failed, sleeping for 1s and exiting", retryCount)
+	time.Sleep(1000 * time.Millisecond)
+	os.Exit(3)
 	err := retryExp(func() error {
 		conn, err := a.transport.Dial(a.route.Address, a.route.Options)
 		if err != nil {
